@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world
-  namespace: dev
+  namespace: argocd
   labels:
     app: hello-world
 spec:
