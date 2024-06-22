@@ -1,4 +1,4 @@
-# Deploy Apps application with Liveness and Readiness Probe without PVC
+# Deploy Apps application with Liveness and Readiness Probe without pvc
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,7 +8,6 @@ metadata:
     app: hello-world
 spec:
   replicas: 1
-  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: hello-world
@@ -18,9 +17,11 @@ spec:
         app: hello-world
     spec:
       serviceAccountName: hello-world
+      imagePullSecrets:
+        - name: helloworldsudigital
       containers:
         - name: hello-world
-          image: "{{ .Values.image.repository }}"
+          image: helloworldsudigital.azurecr.io/hello-world
           ports:
             - name: httpport
               containerPort: 80
@@ -36,10 +37,10 @@ spec:
               port: httpport
             initialDelaySeconds: 5
             timeoutSeconds: 1
-          resources:
+          resources:  
             limits:
-              cpu: "{{ .Values.resources.limits.cpu }}"
-              memory: "{{ .Values.resources.limits.memory }}"
+              cpu: "500m"
+              memory: "512Mi"
             requests:
-              cpu: "{{ .Values.resources.requests.cpu }}"
-              memory: "{{ .Values.resources.requests.memory }}"
+              cpu: "250m"
+              memory: "256Mi"
