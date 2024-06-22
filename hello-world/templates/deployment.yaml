@@ -17,7 +17,7 @@ spec:
       labels:
         app: hello-world
     spec:
-      serviceAccountName: hello-world-admin
+      serviceAccountName: hello-world
       containers:
         - name: hello-world
           image: "{{ .Values.image.repository }}"
