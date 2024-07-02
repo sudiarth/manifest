@@ -1,16 +1,15 @@
-# Deploy ClusterIP Services
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
-  namespace: argocd
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app: hello-world
+    app: {{ .Values.service.name }}
 spec:
   selector:
-    app: hello-world
-  type: ClusterIP
+    app: {{ .Values.service.name }}
+  type: {{ .Values.service.type }}
   ports:
     - name: httpport
-      port: 80
-      targetPort: 80
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}

@@ -1,25 +1,26 @@
-# Deploy Apps application with Liveness and Readiness Probe without pvc
+# Deploy Apps application with Liveness and Readiness Probe without PVC
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
-  namespace: argocd
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app: hello-world
+    app: {{ .Chart.Name }}
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: hello-world
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: hello-world
+        app: {{ .Chart.Name }}
     spec:
-      serviceAccountName: hello-world-admin
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
-        - name: hello-world
-          image: lanxic/hello-world
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}
           ports:
             - name: httpport
               containerPort: 80
@@ -35,10 +36,10 @@ spec:
               port: httpport
             initialDelaySeconds: 5
             timeoutSeconds: 1
-          resources:  
+          resources:
             limits:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
             requests:
-              cpu: "250m"
-              memory: "256Mi"
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
