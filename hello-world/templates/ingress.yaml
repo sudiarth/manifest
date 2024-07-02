@@ -11,11 +11,8 @@ spec:
         paths:
           - path: {{ .Values.ingress.hosts[0].paths[0].path }}
             pathType: {{ .Values.ingress.hosts[0].paths[0].pathType }}
-  {{- with .Values.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- with .Values.ingress.tls }}
-  tls:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+            backend:
+              service:
+                name: {{ .Chart.Name }}
+                port:
+                  number: {{ .Values.service.port }}
