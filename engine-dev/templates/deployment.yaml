@@ -18,9 +18,14 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
+      imagePullSecrets:
+      {{- if .Values.imagePullSecrets }}
+      {{- toYaml .Values.imagePullSecrets | nindent 2 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: httpport
               containerPort: {{ .Values.service.port }}

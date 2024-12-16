@@ -15,7 +15,9 @@ image:
   timeoutSeconds: 5
   failureThreshold: 3
 
-imagePullSecrets: []
+imagePullSecrets: 
+  - name: acr-engindev
+  
 nameOverride: ""
 fullnameOverride: ""
 
