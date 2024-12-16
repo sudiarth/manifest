@@ -40,13 +40,18 @@ service:
   targetPort: 5003
 
 ingress:
+  enabled: true
   className: "nginx"
-  annotations: {}
+  annotations: 
+    nginx.ingress.kubernetes.io/enable-real-ip: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
   hosts:
     - host: engine-dev.sudigital.com
       paths:
-        - path: /
-          pathType: Prefix
+        - path: "/"
+          pathType: "Prefix"
+          serviceName: "engine-dev-service"
+          port: 5003
   tls: []
 
 resources:
