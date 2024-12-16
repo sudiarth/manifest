@@ -1,0 +1,71 @@
+# Default values for test-login-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: dev
+
+replicaCount: 1
+
+image:
+  repository: enginedev.azurecr.io/engine-dev:latest
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "engine-dev-admin"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  name: engine-dev
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: engine-dev.sudigital.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
