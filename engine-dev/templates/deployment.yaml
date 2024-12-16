@@ -20,35 +20,35 @@ spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       imagePullSecrets:
       {{- if .Values.imagePullSecrets }}
-      {{- toYaml .Values.imagePullSecrets | nindent 2 }}
+      {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
             - name: httpport
               containerPort: {{ .Values.service.port }}
           livenessProbe:
             httpGet:
-              path: /
-              port: httpport
-            initialDelaySeconds: {{ .Values.image.initialDelaySeconds }}
-            periodSeconds: {{ .Values.image.periodSeconds }}
-            timeoutSeconds: {{ .Values.image.timeoutSeconds }}
-            failureThreshold: {{ .Values.image.failureThreshold }}
+              path: {{ .Values.probes.liveness.path | default "/" }}
+              port: http
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds | default 10 }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds | default 1 }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold | default 3 }}
           readinessProbe:
             httpGet:
-              path: /
-              port: httpport
-            initialDelaySeconds: {{ .Values.image.initialDelaySeconds }}
-            periodSeconds: {{ .Values.image.periodSeconds }}
-            timeoutSeconds: {{ .Values.image.timeoutSeconds }}
-            failureThreshold: {{ .Values.image.failureThreshold }}
+              path: {{ .Values.probes.readiness.path | default "/" }}
+              port: http
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds | default 10 }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds | default 1 }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold | default 3 }}
           resources:
             limits:
-              cpu: {{ .Values.resources.limits.cpu }}
-              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu | default "500m" }}
+              memory: {{ .Values.resources.limits.memory | default "512Mi" }}
             requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu | default "250m" }}
+              memory: {{ .Values.resources.requests.memory | default "256Mi" }}
