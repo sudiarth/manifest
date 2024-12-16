@@ -10,6 +10,10 @@ image:
   repository: enginedev.azurecr.io/engine-dev:9
   pullPolicy: IfNotPresent
   tag: ""
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
 
 imagePullSecrets: []
 nameOverride: ""

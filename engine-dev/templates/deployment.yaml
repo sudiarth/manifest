@@ -23,19 +23,23 @@ spec:
           image: {{ .Values.image.repository }}
           ports:
             - name: httpport
-              containerPort: 80
+              containerPort: {{ .Values.service.port }}
           livenessProbe:
             httpGet:
               path: /
               port: httpport
-            initialDelaySeconds: 30
-            timeoutSeconds: 1
+            initialDelaySeconds: {{ .Values.image.initialDelaySeconds }}
+            periodSeconds: {{ .Values.image.periodSeconds }}
+            timeoutSeconds: {{ .Values.image.timeoutSeconds }}
+            failureThreshold: {{ .Values.image.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /
               port: httpport
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
+            initialDelaySeconds: {{ .Values.image.initialDelaySeconds }}
+            periodSeconds: {{ .Values.image.periodSeconds }}
+            timeoutSeconds: {{ .Values.image.timeoutSeconds }}
+            failureThreshold: {{ .Values.image.failureThreshold }}
           resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
