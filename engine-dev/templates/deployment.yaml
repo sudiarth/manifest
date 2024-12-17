@@ -33,13 +33,13 @@ spec:
             httpGet:
               path: /
               port: httpport
-            initialDelaySeconds: 30
+            initialDelaySeconds: 300
             timeoutSeconds: 1
           readinessProbe:
             httpGet:
               path: /
               port: httpport
-            initialDelaySeconds: 5
+            initialDelaySeconds: 300
             timeoutSeconds: 1
           resources:
             limits:
