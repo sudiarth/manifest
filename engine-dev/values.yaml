@@ -42,8 +42,8 @@ securityContext: {}
 service:
   name: engine-dev
   type: ClusterIP
-  port: 3005
-  targetPort: 3005
+  port: 80
+  targetPort: 80
 
 ingress:
   enabled: true
@@ -57,7 +57,7 @@ ingress:
         - path: "/"
           pathType: "Prefix"
           serviceName: "engine-dev-service"
-          port: 3005
+          port: 80
   tls: []
   
 probes:
