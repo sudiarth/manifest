@@ -28,23 +28,19 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
             - name: httpport
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
           livenessProbe:
             httpGet:
-              path: {{ .Values.probes.liveness.path | default "/" }}
-              port: http
-            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds | default 10 }}
-            periodSeconds: {{ .Values.probes.liveness.periodSeconds | default 10 }}
-            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds | default 1 }}
-            failureThreshold: {{ .Values.probes.liveness.failureThreshold | default 3 }}
+              path: /
+              port: httpport
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
           readinessProbe:
             httpGet:
-              path: {{ .Values.probes.readiness.path | default "/" }}
-              port: http
-            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds | default 10 }}
-            periodSeconds: {{ .Values.probes.readiness.periodSeconds | default 10 }}
-            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds | default 1 }}
-            failureThreshold: {{ .Values.probes.readiness.failureThreshold | default 3 }}
+              path: /
+              port: httpport
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
           resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu | default "500m" }}
