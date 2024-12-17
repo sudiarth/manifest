@@ -61,13 +61,13 @@ ingress:
   
 probes:
   liveness:
-    # path: "/health"
+    path: "/"
     initialDelaySeconds: 5
     periodSeconds: 10
     timeoutSeconds: 1
     failureThreshold: 3
   readiness:
-    # path: "/ready"
+    path: "/"
     initialDelaySeconds: 5
     periodSeconds: 10
     timeoutSeconds: 1
