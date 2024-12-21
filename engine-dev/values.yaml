@@ -7,7 +7,7 @@ namespace: dev
 replicaCount: 1
 
 image:
-  repository: enginedev.azurecr.io/engine-dev:45
+  repository: enginedev.azurecr.io/engine-dev:46
   pullPolicy: IfNotPresent
   tag: ""
   initialDelaySeconds: 30
