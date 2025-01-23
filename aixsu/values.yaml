@@ -7,7 +7,7 @@ namespace: dev
 replicaCount: 1
 
 image:
-  repository: aixsusudigital.azurecr.io/aixsu:89
+  repository: aixsusudigital.azurecr.io/aixsu:1
   pullPolicy: IfNotPresent
   tag: ""
 
